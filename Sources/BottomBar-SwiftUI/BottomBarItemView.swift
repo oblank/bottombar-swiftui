@@ -14,23 +14,29 @@ public struct BottomBarItemView: View {
     public let item: BottomBarItem
     
     public var body: some View {
-        HStack {
-            item.icon
-                .imageScale(.large)
-                .foregroundColor(isSelected ? item.color : .primary)
-            
-            if isSelected {
-                Text(item.title)
-                    .foregroundColor(item.color)
-                    .font(.caption)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+        HStack (alignment: .center) {
+            VStack{
+                item.icon
+    //                .imageScale(.large)
+                    .font(.system(size: isSelected ? item.size : item.size * 0.98, weight: .heavy, design: .default))
+                    .foregroundColor(isSelected ? item.color : item.defaultColor)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: isSelected ? item.size : item.size * 0.9)
+                            .stroke(isSelected ? item.color : .clear, lineWidth: 1.5)
+                    )
+                if isSelected && item.title != "" {
+                    Text(item.title)
+                        .foregroundColor(item.color)
+                        .font(.caption)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                }
             }
         }
-        .padding()
-        .background(
-            Capsule()
-                .fill(isSelected ? item.color.opacity(0.2) : Color.clear)
-        )
+//        .padding()
+//        .background(
+//            Capsule()
+//                .fill(isSelected ? item.color.opacity(0.2) : Color.clear)
+//        )
     }
     
     var isSelected : Bool{
